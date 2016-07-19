@@ -1,49 +1,53 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-char A[50][50]={'\0'};
+char A[50][50];
 int main(){
-int N,i,size,length_max,j,k;
+int N,i,size,largest,len_tmp,j,k;
 char tmp;
-char cmp1[50]={'\0'};
-char cmp2[50]={'\0'};
+char cmp1[50];
+char cmp2[50];
 int len1,len2;
-int ans=0;
+int ans;
 while(scanf("%d",&N)!=EOF){
-    length_max=1;
+
+    tmp=getchar();
     for(i=0;i<N;i++){
         scanf("%s",&A[i]);
-        j=strlen(A[i]);
-        if(length_max<j){
-            length_max=j;
+    }
+    largest=strlen(A[0]);
+    for(i=1;i<N;i++){
+        len_tmp=strlen(A[i]);
+        if(largest<=len_tmp){
+            largest=len_tmp;
         }
     }
-    size=1;
+    //printf("%d\n",largest);
     ans=0;
-    while(size<=length_max){
+    for(size=1;size<=largest;size++){
         for(i=0;i<N;i++){
             for(j=0;j<N;j++){
-                if(i!=j){
+                if(j!=i){
                     len1=strlen(A[i]);
                     len2=strlen(A[j]);
-                    memset(cmp1,'\0',50);
-                    memset(cmp2,'\0',50);
                     for(k=0;k<size;k++){
                         cmp1[size-1-k]=A[i][len1-1-k];
                         cmp2[k]=A[j][k];
                     }
+                    cmp1[size]='\0';
+                    cmp2[size]='\0';
+                    //printf("%s %s\n",cmp1,cmp2);
                     if(strcmp(cmp1,cmp2)==0){
-                        if(ans<size){
+                        if(ans<=size){
                             ans=size;
                         }
                     }
                 }
+
             }
         }
-        size++;
     }
     printf("%d\n",ans);
-    memset(A,'\0',2500);
 }
 return 0;
 }
